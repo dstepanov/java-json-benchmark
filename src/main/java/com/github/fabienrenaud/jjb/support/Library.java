@@ -29,6 +29,8 @@ public enum Library {
     JODD,
     MOSHI,
     TAPESTRY,
+    JSONITER,
+    MICRONAUT,
     MINIMALJSON,
     MJSON,
     QSON,

@@ -26,6 +26,9 @@ import com.squareup.moshi.Moshi;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 import flexjson.transformer.AbstractTransformer;
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.serde.config.annotation.SerdeConfig;
 import io.avaje.jsonb.jackson.JacksonAdapter;
 import io.avaje.jsonb.stream.JsonStream;
 import io.quarkus.qson.generator.QsonMapper;
@@ -41,6 +44,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +52,15 @@ import java.util.UUID;
 
 public class ClientsJsonProvider implements JsonProvider<Clients> {
 
+    private final io.micronaut.serde.ObjectMapper objectMapper = ApplicationContext
+            .builder()
+            .deduceEnvironment(false)
+            .properties(CollectionUtils.mapOf(
+                    "micronaut.serde.serialization.inclusion", SerdeConfig.SerInclude.ALWAYS,
+                    "micronaut.serde.write-dates-as-timestamps", false
+            ))
+            .start()
+            .getBean(io.micronaut.serde.ObjectMapper.class);
     private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, type, jsonDeserializationContext) -> LocalDate.parse(json.getAsString()))
             .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (value, typeOfSrc, context) -> new JsonPrimitive(value.toString()))
@@ -272,6 +285,11 @@ public class ClientsJsonProvider implements JsonProvider<Clients> {
     @Override
     public jodd.json.JsonSerializer joddSer() {
         return JODD_SER.get();
+    }
+
+    @Override
+    public io.micronaut.serde.ObjectMapper micronaut() {
+        return objectMapper;
     }
 
     @Override
