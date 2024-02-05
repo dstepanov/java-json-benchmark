@@ -46,4 +46,9 @@ public class ClientsDeserializationTest extends JsonBenchmarkClientsTest {
     public void qson() throws Exception {
         // FIXME: does not support arrays
     }
+
+    @Override
+    public void micronaut() throws Exception {
+        super.micronaut();
+    }
 }

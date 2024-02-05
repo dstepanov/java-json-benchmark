@@ -6,7 +6,6 @@ import com.bluelinelabs.logansquare.typeconverters.StringBasedTypeConverter;
 import com.dslplatform.json.CompiledJson;
 import com.dslplatform.json.JsonAttribute;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.math.BigDecimal;
@@ -23,7 +22,6 @@ import java.util.UUID;
 @CompiledJson
 @jodd.json.meta.JSON
 @Serdeable
-@Introspected(accessKind = Introspected.AccessKind.FIELD)
 public class Clients {
 
     @JsonField
@@ -65,7 +63,6 @@ public class Clients {
     @io.avaje.jsonb.Json
     @JsonObject
     @Serdeable
-    @Introspected(accessKind = Introspected.AccessKind.FIELD)
     public static final class Client {
 
         @JsonField
@@ -404,7 +401,6 @@ public class Clients {
     @io.avaje.jsonb.Json
     @JsonObject
     @Serdeable
-    @Introspected(accessKind = Introspected.AccessKind.FIELD)
     public static final class Partner {
 
         @JsonField
